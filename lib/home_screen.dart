@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter_tutorial/screens/current_location_screen.dart';
 import 'package:google_maps_flutter_tutorial/screens/nearby_places_screen.dart';
 import 'package:google_maps_flutter_tutorial/screens/search_places_screen.dart';
-import 'package:google_maps_flutter_tutorial/screens/simple_map_screen.dart';
 
 import 'screens/polyline_screen.dart';
 

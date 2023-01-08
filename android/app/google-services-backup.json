@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "238515306017",
-    "project_id": "foodtruck2-d05a2",
-    "storage_bucket": "foodtruck2-d05a2.appspot.com"
+    "project_number": "405342118883",
+    "project_id": "foodtruck-ec5a1",
+    "storage_bucket": "foodtruck-ec5a1.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:238515306017:android:009356be6242e661c4ed60",
+        "mobilesdk_app_id": "1:405342118883:android:bf7b080db437b5053f76d6",
         "android_client_info": {
           "package_name": "com.example.google_maps_flutter_tutorial"
         }
       },
       "oauth_client": [
         {
-          "client_id": "238515306017-7a1a4m9brdtcpg6rb8e5hgt3oecs5v7k.apps.googleusercontent.com",
+          "client_id": "405342118883-l58md3hhcs5a1o4nfk43fm4ot6uu8sgh.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC2AjqnEWJmM8SohlwXt7Vor7J65OSzBCM"
+          "current_key": "AIzaSyC4fzdiEIklThOawypchiDaW2HhtTOM82Y"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "238515306017-7a1a4m9brdtcpg6rb8e5hgt3oecs5v7k.apps.googleusercontent.com",
+              "client_id": "405342118883-l58md3hhcs5a1o4nfk43fm4ot6uu8sgh.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

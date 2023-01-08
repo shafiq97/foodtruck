@@ -1,8 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'dart:developer';
-
-import 'package:google_maps_flutter_tutorial/home_screen.dart';
+import 'package:google_maps_flutter_tutorial/screens/user.dart';
+import 'package:google_maps_flutter_tutorial/screens/vendor.dart';
 import 'package:google_maps_flutter_tutorial/service/user_service.dart';
 import 'package:lottie/lottie.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -169,9 +168,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   user = await UserService(uid: _auth.currentUser?.uid)
                       .userData
                       .first,
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => HomeScreen())),
-                  log(user.email.toString())
+                  if (user.role == "vendor")
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (context) => Vendor()))
+                  else
+                    {
+                      Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => UserUi())),
+                    }
                 });
       } on FirebaseAuthException catch (error) {
         switch (error.code) {

@@ -14,23 +14,19 @@ class UserService {
       FirebaseFirestore.instance.collection('users');
 
   Future executeUpdateUserData(
-      String userName, String phoneNumber, String email) async {
+      String name, String phoneNumber) async {
+    log('got here');
     return await _userdb.doc(uid).update({
-      'name': userName,
-      'email': email,
+      'name': name,
       'phone_number': phoneNumber,
     });
   }
 
   //staffData from snapshot
   UserModel _userDataFromSnapshot(DocumentSnapshot snapshot) {
-    log("here");
     Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
-    log(data.toString());
     return UserModel(
-      uid: data['uid'],
-      email: data['email'],
-    );
+        uid: data['uid'], email: data['email'], role: data['role']);
   }
 
   //get staff stream
