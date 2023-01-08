@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -19,7 +17,7 @@ class UserUi extends StatefulWidget {
 final homeScaffoldKey2 = GlobalKey<ScaffoldState>();
 
 class _UserUiState extends State<UserUi> {
-  int _selectedIndex = 0;
+  // int _selectedIndex = 0;
 
   Future<void> _signOut() async {
     await FirebaseAuth.instance.signOut();
@@ -31,9 +29,9 @@ class _UserUiState extends State<UserUi> {
     if (index == 1) {
       _signOut();
     }
-    setState(() {
-      _selectedIndex = index;
-    });
+    // setState(() {
+    //   _selectedIndex = index;
+    // });
   }
 
   @override
@@ -124,9 +122,9 @@ Widget courseLayout(BuildContext context) {
     const NearByPlacesScreen(),
     const Profile()
   ];
-  var size = MediaQuery.of(context).size;
-  final double itemHeight = (size.height - kToolbarHeight - 24) / 2;
-  final double itemWidth = size.width / 2;
+  // var size = MediaQuery.of(context).size;
+  // final double itemHeight = (size.height - kToolbarHeight - 24) / 2;
+  // final double itemWidth = size.width / 2;
 
   return GridView.builder(
     shrinkWrap: true,

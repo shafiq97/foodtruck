@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter_tutorial/home_screen.dart';
 import 'package:google_maps_flutter_tutorial/screens/login.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:google_maps_flutter_tutorial/screens/user.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

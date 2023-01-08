@@ -1,8 +1,5 @@
 import 'dart:developer';
-import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_installations/firebase_installations.dart';
 import 'package:google_maps_flutter_tutorial/model/user_model.dart';
 
 class UserService {
@@ -13,12 +10,23 @@ class UserService {
   static final CollectionReference _userdb =
       FirebaseFirestore.instance.collection('users');
 
-  Future executeUpdateUserData(
-      String name, String phoneNumber) async {
-    log('got here');
+  Future executeUpdateUserData(String name, String phoneNumber) async {
     return await _userdb.doc(uid).update({
       'name': name,
       'phone_number': phoneNumber,
+    });
+  }
+
+  Future updateToUsers(email, role) async {
+    return await _userdb
+        .doc(uid)
+        .set({'role': role, 'uid': uid, 'email': email});
+  }
+
+  Future setRole(email, role) async {
+    await updateToUsers(email, role);
+    return await _userdb.doc(uid).update({
+      'role': role,
     });
   }
 

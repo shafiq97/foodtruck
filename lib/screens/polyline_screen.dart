@@ -87,8 +87,6 @@ class _PolylineScreenState extends State<PolylineScreen> {
             destination.longitude.toString() +
             "&mode=driving"));
 
-    print(response.body);
-
     polylineResponse = PolylineResponse.fromJson(jsonDecode(response.body));
 
     totalDistance = polylineResponse.routes![0].legs![0].distance!.text!;

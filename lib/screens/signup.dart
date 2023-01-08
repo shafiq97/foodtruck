@@ -1,8 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:google_maps_flutter_tutorial/screens/signup.dart';
-import 'package:google_maps_flutter_tutorial/screens/user.dart';
-import 'package:google_maps_flutter_tutorial/screens/vendor.dart';
+import 'package:google_maps_flutter_tutorial/screens/login.dart';
 import 'package:google_maps_flutter_tutorial/service/user_service.dart';
 import 'package:lottie/lottie.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -10,15 +8,17 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_maps_flutter_tutorial/model/user_model.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+const List<String> list = <String>['vendor', 'user'];
+
+class SingUp extends StatefulWidget {
+  const SingUp({Key? key}) : super(key: key);
 
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _SingUpState createState() => _SingUpState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
-  final _formKey = GlobalKey<FormState>();
+class _SingUpState extends State<SingUp> {
+  final _formKey5 = GlobalKey<FormState>();
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -26,9 +26,12 @@ class _LoginScreenState extends State<LoginScreen> {
   final _auth = FirebaseAuth.instance;
 
   String? errorMessage;
+  String? _selectedValue;
 
   @override
   Widget build(BuildContext context) {
+    String dropdownValue = list.first;
+
     final emailField = TextFormField(
         autofocus: false,
         controller: emailController,
@@ -91,10 +94,11 @@ class _LoginScreenState extends State<LoginScreen> {
           padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           minWidth: MediaQuery.of(context).size.width,
           onPressed: () {
-            signIn(emailController.text, passwordController.text);
+            signUp(
+                emailController.text, passwordController.text, dropdownValue);
           },
           child: Text(
-            "Login",
+            "SignUp",
             textAlign: TextAlign.center,
             style: TextStyle(
                 fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
@@ -110,7 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Padding(
               padding: const EdgeInsets.all(36.0),
               child: Form(
-                key: _formKey,
+                key: _formKey5,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -126,21 +130,44 @@ class _LoginScreenState extends State<LoginScreen> {
                     SizedBox(height: 25),
                     passwordField,
                     SizedBox(height: 35),
+                    DropdownButton<String>(
+                      value: dropdownValue,
+                      icon: const Icon(Icons.arrow_downward),
+                      elevation: 16,
+                      style: const TextStyle(color: Colors.deepPurple),
+                      underline: Container(
+                        height: 2,
+                        color: Colors.deepPurpleAccent,
+                      ),
+                      onChanged: (String? value) {
+                        // This is called when the user selects an item.
+                        setState(() {
+                          dropdownValue = value!;
+                        });
+                      },
+                      items: list.map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                    ),
+                    SizedBox(height: 15),
                     loginButton,
                     SizedBox(height: 15),
                     Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          Text("Don't have an account? "),
+                          Text("Already have account? "),
                           GestureDetector(
                             onTap: () {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => SingUp()));
+                                      builder: (context) => LoginScreen()));
                             },
                             child: Text(
-                              "SignUp",
+                              "Login",
                               style: TextStyle(
                                   color: Colors.redAccent,
                                   fontWeight: FontWeight.bold,
@@ -158,25 +185,18 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  void signIn(String email, String password) async {
-    if (_formKey.currentState!.validate()) {
+  void signUp(String email, String password, String dropdownValue) async {
+    if (_formKey5.currentState!.validate()) {
       try {
         UserModel user = UserModel();
         _auth
-            .signInWithEmailAndPassword(email: email, password: password)
+            .createUserWithEmailAndPassword(email: email, password: password)
             .then((uid) async => {
-                  Fluttertoast.showToast(msg: "Login Successful"),
-                  user = await UserService(uid: _auth.currentUser?.uid)
-                      .userData
-                      .first,
-                  if (user.role == "vendor")
-                    Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (context) => Vendor()))
-                  else
-                    {
-                      Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => UserUi())),
-                    }
+                  Fluttertoast.showToast(msg: "Sign Up"),
+                  UserService(uid: _auth.currentUser?.uid)
+                      .setRole(email, dropdownValue),
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => LoginScreen())),
                 });
       } on FirebaseAuthException catch (error) {
         switch (error.code) {

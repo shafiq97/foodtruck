@@ -3,8 +3,6 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:google_maps_flutter_tutorial/model/user_model.dart';
 import 'package:google_maps_flutter_tutorial/service/user_service.dart';
 
 class Profile extends StatefulWidget {
@@ -15,7 +13,7 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  final _formKey = GlobalKey<FormState>();
+  final _formKey3 = GlobalKey<FormState>();
   final _name = TextEditingController();
   final _phoneNumber = TextEditingController();
   final FirebaseAuth auth = FirebaseAuth.instance;
@@ -47,7 +45,7 @@ class _ProfileState extends State<Profile> {
           title: const Text('User Profile'),
         ),
         body: Form(
-            key: _formKey,
+            key: _formKey3,
             child: Column(
               children: [
                 Padding(
@@ -78,7 +76,7 @@ class _ProfileState extends State<Profile> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    if (_formKey.currentState!.validate()) {
+                    if (_formKey3.currentState!.validate()) {
                       // Save the form data to the database
                       // final databaseReference = FirebaseDatabase.instance.ref();
                       // databaseReference.child("users").push().set({
