@@ -1,16 +1,13 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
 import 'package:google_maps_flutter_tutorial/screens/current_location_screen.dart';
-import 'package:google_maps_flutter_tutorial/screens/login.dart';
 import 'package:google_maps_flutter_tutorial/screens/profile.dart';
 import 'package:google_maps_flutter_tutorial/screens/search_places_screen.dart';
-
+import 'package:google_fonts/google_fonts.dart';
 import 'nearby_places_screen.dart';
 
 class UserUi extends StatefulWidget {
-  final String? name;
-  const UserUi({super.key, this.name});
+  const UserUi({Key? key}) : super(key: key);
+
   @override
   State<UserUi> createState() => _UserUiState();
 }
@@ -18,23 +15,6 @@ class UserUi extends StatefulWidget {
 final homeScaffoldKey2 = GlobalKey<ScaffoldState>();
 
 class _UserUiState extends State<UserUi> {
-  // int _selectedIndex = 0;
-
-  Future<void> _signOut() async {
-    await FirebaseAuth.instance.signOut();
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => const LoginScreen()));
-  }
-
-  void _onItemTapped(int index) {
-    if (index == 1) {
-      _signOut();
-    }
-    // setState(() {
-    //   _selectedIndex = index;
-    // });
-  }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -42,26 +22,8 @@ class _UserUiState extends State<UserUi> {
       home: Scaffold(
         key: homeScaffoldKey2,
         appBar: AppBar(
-          title: Text("Welcome " + widget.name!),
+          title: const Text("Welcome User!"),
           centerTitle: true, // this is all you need
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.logout),
-              label: 'Logout',
-            ),
-            // BottomNavigationBarItem(
-            //   icon: Icon(Icons.school),
-            //   label: 'School',
-            // ),
-          ],
-          selectedItemColor: Colors.amber[800],
-          onTap: _onItemTapped,
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(
@@ -70,21 +32,16 @@ class _UserUiState extends State<UserUi> {
           child: ListView(
             scrollDirection: Axis.vertical,
             children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          SizedBox(
-                            height: 8,
-                          ),
-                        ],
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      SizedBox(
+                        height: 8,
                       ),
                     ],
                   ),
@@ -123,15 +80,11 @@ Widget courseLayout(BuildContext context) {
     const NearByPlacesScreen(),
     const Profile()
   ];
-  // var size = MediaQuery.of(context).size;
-  // final double itemHeight = (size.height - kToolbarHeight - 24) / 2;
-  // final double itemWidth = size.width / 2;
 
   return GridView.builder(
     shrinkWrap: true,
     physics: const NeverScrollableScrollPhysics(),
     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-      // childAspectRatio: (itemWidth / itemHeight),
       crossAxisCount: 2,
       mainAxisSpacing: 20,
       crossAxisSpacing: 20,
@@ -149,21 +102,13 @@ Widget courseLayout(BuildContext context) {
           },
           child: Stack(children: <Widget>[
             Image.asset(
-              fit: BoxFit.fill,
+              fit: BoxFit.fitWidth,
               'assets/images/${imageFileList[index]}',
             ),
-            Container(
-                decoration: const BoxDecoration(
-              color: Colors.black45,
-            )),
             Center(
                 child: Text(
               text[index],
-              style: const TextStyle(
-                  fontStyle: FontStyle.italic,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                  color: Colors.white),
+              style: GoogleFonts.lato(fontStyle: FontStyle.italic),
             )),
           ]),
         ),

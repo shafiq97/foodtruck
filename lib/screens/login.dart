@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:developer';
+
 import 'package:google_maps_flutter_tutorial/screens/signup.dart';
 import 'package:google_maps_flutter_tutorial/screens/user.dart';
 import 'package:google_maps_flutter_tutorial/screens/vendor.dart';
@@ -173,10 +175,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     Navigator.of(context)
                         .push(MaterialPageRoute(builder: (context) => Vendor()))
                   else
-                    {
-                      Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => UserUi())),
-                    }
+                    log(user.firstName!),
+                  {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => UserUi(name: user.firstName))),
+                  }
                 });
       } on FirebaseAuthException catch (error) {
         switch (error.code) {

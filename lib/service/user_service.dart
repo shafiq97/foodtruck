@@ -34,7 +34,10 @@ class UserService {
   UserModel _userDataFromSnapshot(DocumentSnapshot snapshot) {
     Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
     return UserModel(
-        uid: data['uid'], email: data['email'], role: data['role']);
+        uid: data['uid'],
+        email: data['email'],
+        role: data['role'],
+        firstName: data['name']);
   }
 
   //get staff stream

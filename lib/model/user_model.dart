@@ -12,7 +12,7 @@ class UserModel {
     return UserModel(
       uid: map['uid'],
       email: map['email'],
-      firstName: map['firstName'],
+      firstName: map['name'],
       secondName: map['secondName'],
       role: map['role'],
     );
