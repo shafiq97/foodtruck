@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:developer';
+
 import 'package:google_maps_flutter_tutorial/screens/login.dart';
 import 'package:google_maps_flutter_tutorial/service/user_service.dart';
 import 'package:lottie/lottie.dart';
@@ -27,11 +29,10 @@ class _SingUpState extends State<SingUp> {
 
   String? errorMessage;
   String? _selectedValue;
+  String dropdownValue = list.first;
 
   @override
   Widget build(BuildContext context) {
-    String dropdownValue = list.first;
-
     final emailField = TextFormField(
         autofocus: false,
         controller: emailController,
@@ -141,8 +142,9 @@ class _SingUpState extends State<SingUp> {
                       ),
                       onChanged: (String? value) {
                         // This is called when the user selects an item.
+                        log(value!);
                         setState(() {
-                          dropdownValue = value!;
+                          dropdownValue = value;
                         });
                       },
                       items: list.map<DropdownMenuItem<String>>((String value) {
