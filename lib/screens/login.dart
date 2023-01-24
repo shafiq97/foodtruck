@@ -171,6 +171,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   user = await UserService(uid: _auth.currentUser?.uid)
                       .userData
                       .first,
+                  log("Successfull"),
+                  log(user.firstName!),
                   if (user.role == "vendor")
                     Navigator.of(context)
                         .push(MaterialPageRoute(builder: (context) => Vendor()))

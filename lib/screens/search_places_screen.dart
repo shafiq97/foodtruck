@@ -1,9 +1,12 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_google_places/flutter_google_places.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_webservice/places.dart';
 import 'package:google_api_headers/google_api_headers.dart';
+
+late Position position;
 
 class SearchPlacesScreen extends StatefulWidget {
   const SearchPlacesScreen({Key? key}) : super(key: key);
@@ -15,10 +18,45 @@ class SearchPlacesScreen extends StatefulWidget {
 const kGoogleApiKey = 'AIzaSyDenhUvju7gDDra0UCauaHYTxearSULqWc';
 final homeScaffoldKey = GlobalKey<ScaffoldState>();
 
-class _SearchPlacesScreenState extends State<SearchPlacesScreen> {
-  static const CameraPosition initialCameraPosition =
-      CameraPosition(target: LatLng(37.42796, -122.08574), zoom: 14.0);
+Future<Position> determinePosition() async {
+  bool serviceEnabled;
+  LocationPermission permission;
 
+  serviceEnabled = await Geolocator.isLocationServiceEnabled();
+
+  if (!serviceEnabled) {
+    return Future.error('Location services are disabled');
+  }
+
+  permission = await Geolocator.checkPermission();
+
+  if (permission == LocationPermission.denied) {
+    permission = await Geolocator.requestPermission();
+
+    if (permission == LocationPermission.denied) {
+      return Future.error("Location permission denied");
+    }
+  }
+
+  if (permission == LocationPermission.deniedForever) {
+    return Future.error('Location permissions are permanently denied');
+  }
+
+  Position position = await Geolocator.getCurrentPosition();
+
+  return position;
+}
+
+class _SearchPlacesScreenState extends State<SearchPlacesScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+// Position position = await _determinePosition();
+  static const CameraPosition initialCameraPosition =
+      CameraPosition(target: LatLng(3.1569, 101.7123), zoom: 14.0);
   Set<Marker> markersList = {};
 
   late GoogleMapController googleMapController;
@@ -65,8 +103,7 @@ class _SearchPlacesScreenState extends State<SearchPlacesScreen> {
                 borderRadius: BorderRadius.circular(20),
                 borderSide: const BorderSide(color: Colors.white))),
         components: [
-          Component(Component.country, "pk"),
-          Component(Component.country, "usa")
+          Component(Component.country, "my"),
         ]);
 
     displayPrediction(p!, homeScaffoldKey.currentState);
@@ -108,5 +145,34 @@ class _SearchPlacesScreenState extends State<SearchPlacesScreen> {
 
     googleMapController
         .animateCamera(CameraUpdate.newLatLngZoom(LatLng(lat, lng), 14.0));
+  }
+
+  Future<Position> determinePosition() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+
+    if (!serviceEnabled) {
+      return Future.error('Location services are disabled');
+    }
+
+    permission = await Geolocator.checkPermission();
+
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+
+      if (permission == LocationPermission.denied) {
+        return Future.error("Location permission denied");
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      return Future.error('Location permissions are permanently denied');
+    }
+
+    Position position = await Geolocator.getCurrentPosition();
+
+    return position;
   }
 }

@@ -33,6 +33,7 @@ class UserService {
   //staffData from snapshot
   UserModel _userDataFromSnapshot(DocumentSnapshot snapshot) {
     Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
+    log(snapshot.data().toString());
     return UserModel(
         uid: data['uid'],
         email: data['email'],
