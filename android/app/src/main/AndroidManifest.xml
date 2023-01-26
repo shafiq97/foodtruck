@@ -7,7 +7,7 @@
 
 
    <application
-        android:label="google_maps_flutter_tutorial"
+        android:label="FoodTruck Finder"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true">
         <activity
