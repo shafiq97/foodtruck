@@ -16,8 +16,8 @@ class _NearByPlacesScreenState extends State<NearByPlacesScreen> {
   String apiKey = "AIzaSyDenhUvju7gDDra0UCauaHYTxearSULqWc";
   String radius = "30";
 
-  double latitude = 31.5111093;
-  double longitude = 74.279664;
+  double latitude = 6.4449;
+  double longitude = 100.2048;
 
   NearbyPlacesResponse nearbyPlacesResponse = NearbyPlacesResponse();
 
